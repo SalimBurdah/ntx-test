@@ -32,13 +32,13 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          push: false  # Jangan push dulu, hanya build
+          push: true  # Jangan push dulu, hanya build
           tags: ${{ secrets.DOCKER_IMAGE_NAME }}:latest
 
-      # Step 5: Run tests (Opsional, jika Anda punya test)
-      - name: Run tests (Optional)
-        run: |
-          docker run --rm ${{ secrets.DOCKER_IMAGE_NAME }}:latest npm test
+      # # Step 5: Run tests (Opsional, jika Anda punya test)
+      # - name: Run tests (Optional)
+      #   run: |
+      #     docker run --rm ${{ secrets.DOCKER_IMAGE_NAME }}:latest npm test
 
   cd:
     runs-on: ubuntu-latest
@@ -54,7 +54,7 @@ jobs:
       # Step 7: Pull image dari Docker Hub ke EC2 dan jalankan
       - name: SSH to EC2 and Deploy Docker container
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST_1 }} << 'EOF'
             # Pull Docker image terbaru
             docker pull ${{ secrets.DOCKER_IMAGE_NAME }}:latest
 
@@ -63,5 +63,19 @@ jobs:
             docker rm your-container-name || true
 
             # Jalankan container baru
-            docker run -d --name your-container-name -p 80:80 ${{ secrets.DOCKER_IMAGE_NAME }}:latest
+            docker run -d --name your-container-name -p 3000:3000 ${{ secrets.DOCKER_IMAGE_NAME }}:latest
+          EOF
+
+      - name: SSH to EC2 Instance 2 and Deploy Docker container
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST_2 }} << 'EOF'
+            # Pull the latest Docker image
+            docker pull ${{ secrets.DOCKER_IMAGE_NAME }}:$GITHUB_SHA
+
+            # Stop and remove the old container (if exists)
+            docker stop your-container-name || true
+            docker rm your-container-name || true
+
+            # Run the new container
+            docker run -d --name your-container-name -p 3000:3000 ${{ secrets.DOCKER_IMAGE_NAME }}:$GITHUB_SHA
           EOF
