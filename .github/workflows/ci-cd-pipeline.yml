@@ -101,9 +101,9 @@ jobs:
             sudo docker pull salimburdah/ntx-app:latest
 
             # Stop and remove the old container (if exists)
-            sudo docker stop your-container-name || true
-            sudo docker rm your-container-name || true
+            sudo docker stop salimburdah/ntx-app:latest || true
+            sudo docker rm salimburdah/ntx-app:latest || true
 
             # Run the new container
-            sudo docker run -d --name your-container-name -p 3000:3000 salimburdah/ntx-app:latest
+            sudo docker run -d --name salimburdah/ntx-app:latest -p 3000:3000 salimburdah/ntx-app:latest
           EOF
