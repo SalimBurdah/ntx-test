@@ -43,7 +43,7 @@ jobs:
       #     docker run --rm ${{ secrets.DOCKER_IMAGE_NAME }}:latest npm test
 
   cd:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: ci  # Hanya dijalankan setelah job ci selesai
 
     steps:
@@ -58,26 +58,26 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST_1 }} << 'EOF'
             # Pull Docker image terbaru
-            docker pull ${{ secrets.DOCKER_IMAGE_NAME }}:latest
+            docker pull salimburdah/ntx-app:latest
 
             # Hentikan dan hapus container lama (jika ada)
             docker stop your-container-name || true
             docker rm your-container-name || true
 
             # Jalankan container baru
-            docker run -d --name your-container-name -p 3000:3000 ${{ secrets.DOCKER_IMAGE_NAME }}:latest
+            docker run -d --name your-container-name -p 3000:3000 salimburdah/ntx-app:latest
           EOF
 
       - name: SSH to EC2 Instance 2 and Deploy Docker container
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST_2 }} << 'EOF'
             # Pull the latest Docker image
-            docker pull ${{ secrets.DOCKER_IMAGE_NAME }}:$GITHUB_SHA
+            docker pull salimburdah/ntx-app:latest
 
             # Stop and remove the old container (if exists)
             docker stop your-container-name || true
             docker rm your-container-name || true
 
             # Run the new container
-            docker run -d --name your-container-name -p 3000:3000 ${{ secrets.DOCKER_IMAGE_NAME }}:$GITHUB_SHA
+            docker run -d --name your-container-name -p 3000:3000 salimburdah/ntx-app:latest
           EOF
