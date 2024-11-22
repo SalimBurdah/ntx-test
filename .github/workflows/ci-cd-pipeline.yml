@@ -10,7 +10,7 @@ on:
 
 jobs:
   ci:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       # Step 1: Checkout kode
       - name: Checkout code
@@ -29,12 +29,14 @@ jobs:
 
       # Step 4: Build Docker image
       - name: Build Docker image
-        uses: salimburdah/ntx-app
+        uses: docker/build-push-action@v3
         with:
           context: .
-          push: true  # Jangan push dulu, hanya build
-          tags: ${{ secrets.DOCKER_IMAGE_NAME }}:latest
-
+          push: true
+          tags: |
+            salimburdah/ntx-app:latest
+      
+      # salimburdah/${{ secrets.DOCKER_IMAGE_NAME }}:latest
       # # Step 5: Run tests (Opsional, jika Anda punya test)
       # - name: Run tests (Optional)
       #   run: |
