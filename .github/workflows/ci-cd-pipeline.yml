@@ -71,14 +71,14 @@ jobs:
             fi
 
             # Pull Docker image terbaru
-            docker pull salimburdah/ntx-app:latest
+            sudo docker pull salimburdah/ntx-app:latest
 
             # Hentikan dan hapus container lama (jika ada)
-            docker stop your-container-name || true
-            docker rm your-container-name || true
+            sudo docker stop your-container-name || true
+            sudo docker rm your-container-name || true
 
             # Jalankan container baru
-            docker run -d --name your-container-name -p 3000:3000 salimburdah/ntx-app:latest
+            sudo docker run -d --name your-container-name -p 3000:3000 salimburdah/ntx-app:latest
           EOF
 
       - name: SSH to EC2 Instance 2 and Deploy Docker container
@@ -96,14 +96,14 @@ jobs:
               sudo apt update
               sudo apt install -y docker-ce docker-ce-cli containerd.io
             fi
-            
+
             # Pull the latest Docker image
-            docker pull salimburdah/ntx-app:latest
+            sudo docker pull salimburdah/ntx-app:latest
 
             # Stop and remove the old container (if exists)
-            docker stop your-container-name || true
-            docker rm your-container-name || true
+            sudo docker stop your-container-name || true
+            sudo docker rm your-container-name || true
 
             # Run the new container
-            docker run -d --name your-container-name -p 3000:3000 salimburdah/ntx-app:latest
+            sudo docker run -d --name your-container-name -p 3000:3000 salimburdah/ntx-app:latest
           EOF
