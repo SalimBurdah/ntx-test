@@ -78,7 +78,7 @@ jobs:
             sudo docker rm ntx-app || true
 
             # Jalankan container baru
-            sudo docker run -d --name ntx-app -p 80:3000 salimburdah/ntx-app:latest
+            sudo docker run -d --name ntx-app -p 3000:3000 salimburdah/ntx-app:latest
           EOF
 
       - name: SSH to EC2 Instance 2 and Deploy Docker container
@@ -105,5 +105,5 @@ jobs:
             sudo docker rm ntx-app || true
 
             # Run the new container
-            sudo docker run -d --name ntx-app -p 80:3000 salimburdah/ntx-app:latest
+            sudo docker run -d --name ntx-app -p 3000:3000 salimburdah/ntx-app:latest
           EOF
