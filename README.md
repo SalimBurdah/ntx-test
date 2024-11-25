@@ -83,6 +83,11 @@ git commit -m "Add your feature"
 git push origin feature/your-feature
 This will trigger the GitHub Actions workflow.
 
+if you can open the application in your browser you can following this:
+
+<EC2_PUBLIC_IP>:3000 or you can access the domain ntx-app.com
+
+
 ### Assumptions
 
 Docker Installed on EC2: The script assumes Docker is not installed on the EC2 instances. If Docker is already installed, the installation step is skipped.
