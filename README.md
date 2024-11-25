@@ -67,21 +67,21 @@ Step-by-Step Deployment :
    - EC2_PRIVATE_KEY, EC2_USER, EC2_HOST_1, EC2_HOST_2
 3. Clone the Repository
 4. Clone the forked repository to your local machine:
-   git clone https://github.com/your-username/your-repository.git
-   cd your-repository
+   - git clone https://github.com/your-username/your-repository.git
+   - cd your-repository
 
 5.Push Code to Trigger CI/CD Pipeline
   Push your changes to a feature branch:
-  git checkout -b feature/your-feature
-  git add .
-  git commit -m "Add your feature"
-  git push origin feature/your-feature
+  - git checkout -b feature/your-feature
+  - git add .
+  - git commit -m "Add your feature"
+  - git push origin feature/your-feature
 
 This will trigger the GitHub Actions workflow.
 
 if you can open the application in your browser you can following this:
 
-<EC2_PUBLIC_IP>:3000 or you can access the domain ntx-app.com
+   - <EC2_PUBLIC_IP>:3000 or you can access the domain ntx-app.com
 
 
 ### Assumptions
